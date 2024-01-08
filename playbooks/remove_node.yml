@@ -13,22 +13,22 @@
     - { role: kubespray-defaults }
     - { role: bastion-ssh-config, tags: ["localhost", "bastion"] }
 
-- name: Confirm node removal
-  hosts: "{{ node | default('etcd:k8s_cluster:calico_rr') }}"
-  gather_facts: no
-  tasks:
-    - name: Confirm Execution
-      pause:
-        prompt: "Are you sure you want to delete nodes state? Type 'yes' to delete nodes."
-      register: pause_result
-      run_once: True
-      when:
-        - not (skip_confirmation | default(false) | bool)
+# - name: Confirm node removal
+#   hosts: "{{ node | default('etcd:k8s_cluster:calico_rr') }}"
+#   gather_facts: no
+#   tasks:
+#     - name: Confirm Execution
+#       pause:
+#         prompt: "Are you sure you want to delete nodes state? Type 'yes' to delete nodes."
+#       register: pause_result
+#       run_once: True
+#       when:
+#         - not (skip_confirmation | default(false) | bool)
 
-    - name: Fail if user does not confirm deletion
-      fail:
-        msg: "Delete nodes confirmation failed"
-      when: pause_result.user_input | default('yes') != 'yes'
+#     - name: Fail if user does not confirm deletion
+#       fail:
+#         msg: "Delete nodes confirmation failed"
+#       when: pause_result.user_input | default('yes') != 'yes'
 
 - name: Gather facts
   import_playbook: facts.yml
