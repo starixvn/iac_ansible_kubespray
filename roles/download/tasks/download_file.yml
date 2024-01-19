@@ -83,12 +83,13 @@
       valid_mirror_urls: "{{ uri_result.results | selectattr('failed', 'eq', False) | map(attribute='mirror') | list }}"
     delegate_to: "{{ download_delegate if download_force_cache else inventory_hostname }}"
 
+  - name: Download_file | Download item - DEBUG
+    debug:
+      msg: "{{ valid_mirror_urls }}"
 
   # This must always be called, to check if the checksum matches. On no-match the file is re-downloaded.
   # This task will avoid logging it's parameters to not leak environment passwords in the log
   - name: Download_file | Download item
-    debug:
-      msg: "{{ valid_mirror_urls | random }}"
     get_url:
       url: "{{ valid_mirror_urls | random }}"
       dest: "{{ file_path_cached if download_force_cache else download.dest }}"
