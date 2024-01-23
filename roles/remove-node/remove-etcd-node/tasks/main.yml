@@ -17,9 +17,11 @@
     node_ip: "{{ ip | default(access_ip | default(remove_node_ip.stdout)) | trim }}"
   when:
     - inventory_hostname in groups['etcd']
+    
 - name: DEBUG node IP
   debug:
-    msg: "{{ groups['etcd'] }}"
+    msg: "{{ node_ip }}"
+
 - name: Make sure node_ip is set
   assert:
     that: node_ip is defined and node_ip | length > 0
