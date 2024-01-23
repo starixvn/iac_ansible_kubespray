@@ -14,7 +14,7 @@
 
 - name: DEBUG node IP
   debug:
-    msg: "{{ remove_node_ip.stdout }}"
+    msg: "{{ remove_node_ip }}"
 
 - name: Set node IP
   set_fact:
