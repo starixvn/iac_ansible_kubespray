@@ -1,8 +1,7 @@
 ---
 - name: Lookup node IP in kubernetes
   command: >
-    {{ kubectl }} get nodes {{ node }}
-    -o jsonpath={% raw %}'{range .status.addresses[?(@.type=="InternalIP")]}{@.address}{"\n"}{end}'{% endraw %}
+    {{ kubectl }} get nodes {{ inventory_hostname }} -o jsonpath={% raw %}'{range .status.addresses[?(@.type=="InternalIP")]}{@.address}{"\n"}{end}'{% endraw %}
   register: remove_node_ip
   when:
     - groups['kube_control_plane'] | length > 0
