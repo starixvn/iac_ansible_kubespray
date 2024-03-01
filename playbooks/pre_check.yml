@@ -5,4 +5,4 @@
   tasks:
     - name: Check first control plane node certificate
       debug:
-        msg: "{{ hostvars[groups['kube_control_plane'][0]] }}"
+        msg: "First control-plane node: {{ groups['kube_control_plane'][0] }}"
