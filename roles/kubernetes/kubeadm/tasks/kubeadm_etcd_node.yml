@@ -1,4 +1,8 @@
 ---
+- name: DEBUG - first control plane node certificate
+  debug:
+    msg: "{{ hostvars[groups['kube_control_plane'][0]]['kubeadm_certificate_key'] }}"
+    
 - name: Parse certificate key if not set
   set_fact:
     kubeadm_certificate_key: "{{ hostvars[groups['kube_control_plane'][0]]['kubeadm_certificate_key'] }}"
