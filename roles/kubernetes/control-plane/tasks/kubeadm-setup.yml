@@ -184,6 +184,10 @@
     PATH: "{{ bin_dir }}:{{ ansible_env.PATH }}"
   notify: Master | restart kubelet
 
+- name: DEBUG - first control plane node certificate - kubeadm-setup.yml
+  debug:
+    msg: "{{ hostvars[groups['kube_control_plane'][0]]['kubeadm_init'].stdout_lines | default([]) }}"
+
 - name: Set kubeadm certificate key
   set_fact:
     kubeadm_certificate_key: "{{ item | regex_search('--certificate-key ([^ ]+)', '\\1') | first }}"
@@ -191,6 +195,10 @@
   when:
     - kubeadm_certificate_key is not defined
     - (item | trim) is match('.*--certificate-key.*')
+
+- name: DEBUG - first control plane node certificate - kubeadm-setup.yml - Stage2
+  debug:
+    msg: "{{ kubeadm_certificate_key }}"
 
 - name: Create hardcoded kubeadm token for joining nodes with 24h expiration (if defined)
   shell: >-
