@@ -8,6 +8,8 @@
         msg: "First control-plane node: {{ groups['kube_control_plane'][0] }}"
       run_once: true
 
+    - name: 
+
     - name: Set fact first_kube_control_plane
       debug:
-        msg: "{{ joined_control_planes | default([]) | first | default(groups['kube_control_plane'] | first) }}"
+        msg: "{{ default(groups['kube_control_plane'] | first) }}"
