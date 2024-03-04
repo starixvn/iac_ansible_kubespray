@@ -14,10 +14,6 @@
   when: kube_control_planes_raw is succeeded
   run_once: yes
 
-# - name: Set fact first_kube_control_plane
-#   set_fact:
-#     first_kube_control_plane: "{{ joined_control_planes | default([]) | first | default(groups['kube_control_plane'] | first) }}"
-
 - name: Set fact first_kube_control_plane
   set_fact:
-    first_kube_control_plane: "{{ groups['kube_control_plane'] | first) }}"
+    first_kube_control_plane: "{{ joined_control_planes | default([]) | first | default(groups['kube_control_plane'] | first) }}"
