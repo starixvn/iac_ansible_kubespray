@@ -10,4 +10,4 @@
 
     - name: Set fact first_kube_control_plane
       debug:
-        msg: "{{ default(groups['kube_control_plane'] | first) }}"
+        msg: "{{ groups['kube_control_plane'] | first }}"
