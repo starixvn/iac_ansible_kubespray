@@ -20,4 +20,4 @@
 
 - name: Set fact first_kube_control_plane
   set_fact:
-    first_kube_control_plane: "{{ groups['kube_control_plane'] | first) }}"
+    first_kube_control_plane: "{{ groups['kube_control_plane'] | first }}"
