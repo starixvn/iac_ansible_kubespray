@@ -6,6 +6,10 @@
     - not skip_downloads | default(false)
     - not kubeadm_version == downloads.kubeadm.version
 
+- name: Prep_kubeadm_images | Download kubeadm binary - DEBUG
+  debug: 
+    msg: "{{ download_defaults | combine(downloads.kubeadm) }}"
+
 - name: Prep_kubeadm_images | Download kubeadm binary
   include_tasks: "download_file.yml"
   vars:
