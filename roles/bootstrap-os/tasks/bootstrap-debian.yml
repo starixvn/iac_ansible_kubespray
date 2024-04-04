@@ -74,3 +74,13 @@
     state: present
     use: apt
   become: true
+
+
+# Set containerd proxy
+- name: Containerd | Write containerd proxy drop-in
+  template:
+    src: http-proxy.conf.j2
+    dest: "{{ containerd_systemd_dir }}/http-proxy.conf"
+    mode: 0644
+  notify: Restart containerd
+  when: http_proxy is defined or https_proxy is defined

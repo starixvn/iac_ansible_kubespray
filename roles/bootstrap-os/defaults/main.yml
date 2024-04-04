@@ -30,3 +30,5 @@ skip_http_proxy_on_os_packages: false
 # may contain some private data, so it is recommended to set it to false
 # in the production environment.
 unsafe_show_logs: false
+
+containerd_systemd_dir: "/etc/systemd/system/containerd.service.d"
