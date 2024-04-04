@@ -84,3 +84,4 @@
     mode: 0644
   notify: Restart containerd
   when: http_proxy is defined or https_proxy is defined
+  ignore_errors: true
