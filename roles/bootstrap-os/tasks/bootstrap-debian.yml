@@ -80,8 +80,6 @@
 
 # Set containerd proxy
 - name: Prepare CNI
-  hosts: all
-  gather_facts: False
   become: true
   vars:
     ignore_assert_errors: true
