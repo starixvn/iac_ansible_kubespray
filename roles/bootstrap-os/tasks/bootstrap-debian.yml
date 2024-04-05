@@ -74,24 +74,3 @@
     state: present
     use: apt
   become: true
-
-
-
-
-# Set containerd proxy
-- name: Prepare CNI
-  become: true
-  vars:
-    ignore_assert_errors: true
-    kube_network_plugin: cni
-  roles:
-    - role: kubespray-defaults
-    - role: network_plugin/cni
-- name: Containerd | Write containerd proxy drop-in
-  template:
-    src: http-proxy.conf.j2
-    dest: "{{ containerd_systemd_dir }}/http-proxy.conf"
-    mode: 0644
-  notify: Restart containerd
-  when: http_proxy is defined or https_proxy is defined
-  ignore_errors: true
