@@ -76,7 +76,19 @@
   become: true
 
 
+
+
 # Set containerd proxy
+- name: Prepare CNI
+  hosts: all
+  gather_facts: False
+  become: true
+  vars:
+    ignore_assert_errors: true
+    kube_network_plugin: cni
+  roles:
+    - role: kubespray-defaults
+    - role: network_plugin/cni
 - name: Containerd | Write containerd proxy drop-in
   template:
     src: http-proxy.conf.j2
