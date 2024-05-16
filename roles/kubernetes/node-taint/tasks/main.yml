@@ -26,11 +26,11 @@
 - debug:  # noqa name[missing]
     var: inventory_node_taints
 
-- name: Clean up node taints
-  command: >-
-      {{ kubectl }} patch node {{ kube_override_hostname | default(inventory_hostname) }} -p '{"spec":{"taints":[]}}'
-  delegate_to: "{{ groups['kube_control_plane'][0] }}"
-  changed_when: false
+# - name: Clean up node taints    # BETA version
+#   command: >-
+#       {{ kubectl }} patch node {{ kube_override_hostname | default(inventory_hostname) }} -p '{"spec":{"taints":[]}}'
+#   delegate_to: "{{ groups['kube_control_plane'][0] }}"
+#   changed_when: false
 
 - name: Set taint to node
   command: >-

@@ -11,9 +11,9 @@
   delay: 6
   when: inventory_hostname == groups['kube_control_plane'][0]
 
-# - name: Set role node label to empty list   # BETA version
-#   set_fact:
-#     role_node_labels: []
+- name: Set role node label to empty list
+  set_fact:
+    role_node_labels: []
 
 - name: Node label for nvidia GPU nodes
   set_fact:
