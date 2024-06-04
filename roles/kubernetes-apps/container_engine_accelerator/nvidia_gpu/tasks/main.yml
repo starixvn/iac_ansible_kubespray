@@ -1,5 +1,4 @@
 ---
-
 - name: Container Engine Acceleration Nvidia GPU | gather os specific variables
   include_vars: "{{ item }}"
   with_first_found:
@@ -39,11 +38,13 @@
 - name: Config container runtime for NVIDIA toolkit
   raw: nvidia-ctk runtime configure --runtime=containerd
   become: true
+  when: inventory_hostname in nvidia_gpu_nodes
 
 - name: Restart containerd service
   service:
     name: containerd
     state: restarted
+  when: inventory_hostname in nvidia_gpu_nodes
 
 
 
