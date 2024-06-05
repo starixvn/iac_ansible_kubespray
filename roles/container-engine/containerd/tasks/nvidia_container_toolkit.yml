@@ -1,12 +1,50 @@
 ---
-# Install NVIDIA Driver Version
-- name: Install NVIDIA Driver
-  raw: "ubuntu-drivers install --gpgpu nvidia:{{ nvidia_driver_version }}"
+# Install NVIDIA Driver CUDA-toolkit
+- name: Install Requirement
+  raw: "apt-get update && apt-get install -y gcc=4:11.2.0-1ubuntu1"
   become: true
 
-- name: Install NVIDIA Driver-utils
-  raw: "apt-get update && apt-get install -y nvidia-utils-{{ nvidia_driver_version }}"
+- name: Copy cuda pin file
+  copy:
+    src: files/cuda-ubuntu2204.pin
+    dest: /etc/apt/preferences.d/cuda-repository-pin-600
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy repo list file
+  copy:
+    src: files/cuda-repo-ubuntu2204-12-5-local_12.5.0-555.42.02-1_amd64.deb
+    dest: /tmp
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Install cuda repo
+  apt:
+    deb: /tmp/cuda-repo-ubuntu2204-12-5-local_12.5.0-555.42.02-1_amd64.deb
   become: true
+
+- name: Copy keyring cuda
+  raw: "cp /var/cuda-repo-ubuntu2204-12-5-local/cuda-*-keyring.gpg /usr/share/keyrings/"
+  become: true
+
+- name: Install cuda-toolkit
+  raw: "apt-get update && apt-get -y install cuda-toolkit-12-5"
+  become: true
+
+- name: Install cuda-driver
+  raw: "apt-get -y install cuda-drivers"
+  become: true
+
+# # Install NVIDIA Driver Version
+# - name: Install NVIDIA Driver
+#   raw: "ubuntu-drivers install --gpgpu nvidia:{{ nvidia_driver_version }}"
+#   become: true
+
+# - name: Install NVIDIA Driver-utils
+#   raw: "apt-get update && apt-get install -y nvidia-utils-{{ nvidia_driver_version }}"
+#   become: true
 
 # Install NVIDIA container toolkit
 - name: Copy keyrings file
