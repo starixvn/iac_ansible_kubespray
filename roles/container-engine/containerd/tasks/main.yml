@@ -138,3 +138,12 @@
     daemon_reload: yes
     enabled: yes
     state: started
+
+- name: Containerd | Install NVIDIA Container Toolkit
+  include_tasks: nvidia_container_toolkit.yml
+  when: 
+    - nvidia_gpu_nodes is defined
+    - inventory_hostname in nvidia_gpu_nodes
+  tags:
+    - download
+    - nvidia_gpu

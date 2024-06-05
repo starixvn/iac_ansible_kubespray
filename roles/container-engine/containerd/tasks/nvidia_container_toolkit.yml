@@ -1,0 +1,30 @@
+---
+# Install NVIDIA container toolkit
+- name: Copy keyrings file
+  copy:
+    src: files/nvidia-container-toolkit-keyring.gpg
+    dest: /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Copy repo list file
+  copy:
+    src: files/nvidia-container-toolkit.list
+    dest: /etc/apt/sources.list.d/nvidia-container-toolkit.list
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Install NVIDIA container toolkit
+  raw: sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+  become: true
+
+- name: Config container runtime for NVIDIA toolkit
+  raw: sudo nvidia-ctk runtime configure --runtime=containerd
+  become: true
+
+- name: Restart containerd service
+  service:
+    name: containerd
+    state: restarted
