@@ -1,4 +1,13 @@
 ---
+# Install NVIDIA Driver Version
+- name: Install NVIDIA Driver
+  raw: "ubuntu-drivers install --gpgpu nvidia:{{ nvidia_driver_version }}"
+  become: true
+
+- name: Install NVIDIA Driver-utils
+  raw: "apt-get update && apt-get install -y nvidia-utils-{{ nvidia_driver_version }}"
+  become: true
+
 # Install NVIDIA container toolkit
 - name: Copy keyrings file
   copy:
@@ -17,11 +26,11 @@
     mode: 0755
 
 - name: Install NVIDIA container toolkit
-  raw: apt-get update && apt-get install -y nvidia-container-toolkit
+  raw: "apt-get update && apt-get install -y nvidia-container-toolkit"
   become: true
 
 - name: Config container runtime for NVIDIA toolkit
-  raw: nvidia-ctk runtime configure --runtime=containerd
+  raw: "nvidia-ctk runtime configure --runtime=containerd"
   become: true
 
 - name: Restart containerd service
