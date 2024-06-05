@@ -11,6 +11,10 @@
       skip: true
 
 
+- name: DEBUG - NVIDIA Nodes
+  debug:
+    var: nvidia_gpu_nodes
+
 # Install NVIDIA container toolkit
 - name: Copy keyrings file
   copy:
@@ -36,7 +40,7 @@
   when: inventory_hostname in nvidia_gpu_nodes
 
 - name: Config container runtime for NVIDIA toolkit
-  raw: nvidia-ctk runtime configure --runtime=containerd
+  raw: sudo nvidia-ctk runtime configure --runtime=containerd
   become: true
   when: inventory_hostname in nvidia_gpu_nodes
 
