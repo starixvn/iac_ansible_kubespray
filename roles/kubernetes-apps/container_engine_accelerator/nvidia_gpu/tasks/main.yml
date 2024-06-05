@@ -10,11 +10,6 @@
         - "{{ ansible_os_family | lower }}.yml"
       skip: true
 
-
-- name: DEBUG - NVIDIA Nodes
-  debug:
-    var: nvidia_gpu_nodes
-
 # Install NVIDIA container toolkit
 - name: Copy keyrings file
   copy:
