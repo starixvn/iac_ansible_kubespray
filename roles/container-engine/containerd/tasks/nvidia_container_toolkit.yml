@@ -1,7 +1,10 @@
 ---
 # Install NVIDIA Driver CUDA-toolkit
 - name: Install Requirement
-  raw: "apt-get update && apt-get install -y gcc=4:11.2.0-1ubuntu1"
+  apt:
+    name: gcc=4:11.2.0-1ubuntu1
+    state: present
+    update_cache: yes
   become: true
 
 - name: Copy cuda pin file
@@ -30,11 +33,12 @@
   become: true
 
 - name: Install cuda-toolkit
-  raw: "apt-get update && apt-get -y install cuda-toolkit-12-5"
-  become: true
-
-- name: Install cuda-driver
-  raw: "apt-get -y install cuda-drivers"
+  apt:
+    name: 
+      - cuda-toolkit-12-5
+      - cuda-drivers
+    state: present
+    update_cache: yes
   become: true
 
 # # Install NVIDIA Driver Version
@@ -64,7 +68,10 @@
     mode: 0755
 
 - name: Install NVIDIA container toolkit
-  raw: "apt-get update && apt-get install -y nvidia-container-toolkit"
+  apt:
+    name: nvidia-container-toolkit
+    state: present
+    update_cache: yes
   become: true
 
 - name: Config container runtime for NVIDIA toolkit
