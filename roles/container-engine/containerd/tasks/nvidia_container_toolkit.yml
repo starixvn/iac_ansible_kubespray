@@ -75,7 +75,7 @@
   become: true
 
 - name: Config container runtime for NVIDIA toolkit
-  raw: "nvidia-ctk runtime configure --runtime=containerd"
+  raw: "nvidia-ctk runtime configure --runtime=containerd  --set-as-default"
   become: true
 
 - name: Restart containerd service
