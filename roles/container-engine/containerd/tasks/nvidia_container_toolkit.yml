@@ -50,33 +50,33 @@
 #   raw: "apt-get update && apt-get install -y nvidia-utils-{{ nvidia_driver_version }}"
 #   become: true
 
-# Install NVIDIA container toolkit
-- name: Copy keyrings file
-  copy:
-    src: files/nvidia-container-toolkit-keyring.gpg
-    dest: /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
-    owner: root
-    group: root
-    mode: 0644
+# Install NVIDIA container toolkit - (Switch this task: Run toolkit with helm now)
+# - name: Copy keyrings file
+#   copy:
+#     src: files/nvidia-container-toolkit-keyring.gpg
+#     dest: /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+#     owner: root
+#     group: root
+#     mode: 0644
 
-- name: Copy repo list file
-  copy:
-    src: files/nvidia-container-toolkit.list
-    dest: /etc/apt/sources.list.d/nvidia-container-toolkit.list
-    owner: root
-    group: root
-    mode: 0755
+# - name: Copy repo list file
+#   copy:
+#     src: files/nvidia-container-toolkit.list
+#     dest: /etc/apt/sources.list.d/nvidia-container-toolkit.list
+#     owner: root
+#     group: root
+#     mode: 0755
 
-- name: Install NVIDIA container toolkit
-  apt:
-    name: nvidia-container-toolkit
-    state: present
-    update_cache: yes
-  become: true
+# - name: Install NVIDIA container toolkit
+#   apt:
+#     name: nvidia-container-toolkit
+#     state: present
+#     update_cache: yes
+#   become: true
 
-- name: Config container runtime for NVIDIA toolkit
-  raw: "nvidia-ctk runtime configure --runtime=containerd  --set-as-default"
-  become: true
+# - name: Config container runtime for NVIDIA toolkit
+#   raw: "nvidia-ctk runtime configure --runtime=containerd  --set-as-default"
+#   become: true
 
 - name: Restart containerd service
   service:
